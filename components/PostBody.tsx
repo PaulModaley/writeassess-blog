@@ -1,4 +1,4 @@
-import { PortableText, type PortableTextComponents } from '@portabletext/react'
+import { PortableText, type PortableTextComponents, type PortableTextBlock } from '@portabletext/react'
 import Image from 'next/image'
 import { urlFor } from '@/sanity/client'
 
@@ -39,7 +39,7 @@ const components: PortableTextComponents = {
   },
 }
 
-export default function PostBody({ body }: { body: unknown[] }) {
+export default function PostBody({ body }: { body: PortableTextBlock[] }) {
   return (
     <div className="prose prose-gray max-w-none prose-headings:font-semibold prose-h2:text-2xl prose-h3:text-xl prose-a:text-primary prose-img:rounded-lg">
       <PortableText value={body} components={components} />
