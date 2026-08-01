@@ -5,8 +5,8 @@ import { schemaTypes } from './sanity/schemas'
 export default defineConfig({
   // Studio is embedded at /blog/studio on the main domain.
   basePath: '/blog/studio',
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  projectId: 'dvjtwlpa',
+  dataset: 'production',
   plugins: [structureTool()],
   schema: { types: schemaTypes },
 })
