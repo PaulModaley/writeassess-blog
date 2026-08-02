@@ -1,12 +1,13 @@
 export const postsQuery = `
-  *[_type == "post" && defined(slug.current) && publishedAt <= now()]
+  *[_type == "post" && defined(slug.current) && (!defined(publishedAt) || publishedAt <= now())]
   | order(publishedAt desc) {
     _id,
     title,
     "slug": slug.current,
     publishedAt,
     excerpt,
-    mainImage
+    mainImage,
+    tags
   }
 `
 
@@ -19,6 +20,7 @@ export const postBySlugQuery = `
     excerpt,
     mainImage,
     body,
+    tags,
     seo
   }
 `

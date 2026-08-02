@@ -33,6 +33,14 @@ export default defineType({
       validation: (Rule) => Rule.max(200),
     }),
     defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: { layout: 'tags' },
+      description: 'Used for filtering on the blog index (e.g. "Assessment", "DfE", "KS2").',
+    }),
+    defineField({
       name: 'mainImage',
       title: 'Main image',
       type: 'image',
