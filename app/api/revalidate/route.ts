@@ -25,8 +25,11 @@ export async function POST(req: NextRequest) {
     // Body may be empty on delete events — revalidate everything.
   }
 
-  // Always revalidate the index (post list may have changed).
+  // Always revalidate the index (post list may have changed) and the sitemap —
+  // without this, a deleted/renamed post can keep showing up in sitemap.xml
+  // indefinitely, since its own time-based revalidate only fires on request traffic.
   revalidatePath('/')
+  revalidatePath('/sitemap.xml')
 
   if (slug) {
     revalidatePath(`/${slug}`)
