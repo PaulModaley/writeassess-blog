@@ -139,7 +139,6 @@ export default defineType({
     {
       name: 'editorial',
       title: 'Editorial / SEO metadata',
-      description: 'Set automatically by the blog automation pipeline; used to detect topic overlap before generating new articles.',
     },
   ],
   preview: {
