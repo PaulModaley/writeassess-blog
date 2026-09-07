@@ -6,6 +6,10 @@ node_modules/
 out/
 next-env.d.ts
 
+# Sanity Studio deploy artifacts
+.sanity/
+dist/
+
 # Environment variables — never commit secrets
 .env.local
 .env*.local
