@@ -27,6 +27,7 @@ export const postBySlugQuery = `
 
 export const allSlugsQuery = `
   *[_type == "post" && defined(slug.current) && (!defined(publishedAt) || publishedAt <= now())] {
-    "slug": slug.current
+    "slug": slug.current,
+    "updatedAt": _updatedAt
   }
 `
