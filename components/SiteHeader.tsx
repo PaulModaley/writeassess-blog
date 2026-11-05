@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { TryLink } from '@/components/TryCta'
 
 export default function SiteHeader() {
   return (
@@ -23,12 +24,20 @@ export default function SiteHeader() {
             Blog
           </Link>
         </div>
-        <a
-          href="https://www.writeassess.co.uk/auth"
-          className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-        >
-          Sign in →
-        </a>
+        <div className="flex items-center gap-4">
+          <TryLink
+            placement="header"
+            className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
+          >
+            Try free
+          </TryLink>
+          <a
+            href="https://www.writeassess.co.uk/auth"
+            className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          >
+            Sign in →
+          </a>
+        </div>
       </div>
     </header>
   )

@@ -21,7 +21,8 @@ export const postBySlugQuery = `
     mainImage,
     body,
     tags,
-    seo
+    seo,
+    cluster
   }
 `
 
