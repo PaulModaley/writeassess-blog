@@ -5,6 +5,8 @@ import { format } from 'date-fns'
 import { client, urlFor } from '@/sanity/client'
 import { postBySlugQuery, allSlugsQuery } from '@/sanity/queries'
 import PostBody from '@/components/PostBody'
+import TryCta from '@/components/TryCta'
+import { inlineCtaSplitIndex } from '@/lib/tryCta'
 
 export const revalidate = 3600
 
@@ -62,6 +64,10 @@ export default async function PostPage({ params }: Props) {
   const post = await client.fetch(postBySlugQuery, { slug })
 
   if (!post) notFound()
+
+  // One mid-article CTA, just before the H2 nearest the middle (see inlineCtaSplitIndex).
+  const splitAt = inlineCtaSplitIndex(post.body)
+  const cluster: string | null = post.cluster ?? null
 
   const heroUrl = post.mainImage
     ? urlFor(post.mainImage).width(1200).height(600).fit('crop').url()
@@ -125,19 +131,32 @@ export default async function PostPage({ params }: Props) {
           </div>
         )}
 
-        {post.body && <PostBody body={post.body} />}
+        {post.body && splitAt !== null ? (
+          <>
+            <PostBody body={post.body.slice(0, splitAt)} />
+            <div className="my-10">
+              <TryCta placement="inline" slug={slug} cluster={cluster} />
+            </div>
+            <PostBody body={post.body.slice(splitAt)} />
+          </>
+        ) : (
+          post.body && <PostBody body={post.body} />
+        )}
 
         <div className="mt-14 pt-8 border-t">
           <p className="text-sm text-gray-400 mb-4">
             WriteAssess helps primary school teachers assess writing in seconds using AI — grounded
             in official DfE exemplification criteria.
           </p>
-          <a
-            href="https://www.writeassess.co.uk/auth?plan=individual"
-            className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
-          >
-            Try WriteAssess free →
-          </a>
+          <TryCta placement="end" slug={slug} cluster={cluster} />
+          <p className="mt-4 text-sm">
+            <a
+              href="https://www.writeassess.co.uk/auth?plan=individual"
+              className="text-primary underline underline-offset-2 hover:text-primary/80"
+            >
+              Or create a free account
+            </a>
+          </p>
         </div>
       </article>
     </>

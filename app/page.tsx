@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { client } from '@/sanity/client'
 import { postsQuery } from '@/sanity/queries'
 import BlogIndex from '@/components/BlogIndex'
+import TryCta from '@/components/TryCta'
 
 export const revalidate = 3600
 
@@ -23,13 +24,17 @@ export default async function BlogIndexPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-      <div className="mb-10">
+      <div className="mb-6">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">
           WriteAssess Blog
         </h1>
         <p className="text-gray-500 text-lg max-w-2xl">
           Practical insights on writing assessment, DfE criteria, and primary school teaching.
         </p>
+      </div>
+
+      <div className="mb-8">
+        <TryCta placement="index" variant="compact" />
       </div>
 
       {posts.length === 0 ? (

@@ -3,6 +3,7 @@ import Script from 'next/script'
 import './globals.css'
 import SiteHeader from '@/components/SiteHeader'
 import AnalyticsTracker from '@/components/AnalyticsTracker'
+import { TryLink } from '@/components/TryCta'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.writeassess.co.uk'),
@@ -51,8 +52,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="border-t bg-white mt-16 py-8">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-400">
             <span>© {new Date().getFullYear()} WriteAssess</span>
-            <nav className="flex gap-6">
+            <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2">
               <a href="https://www.writeassess.co.uk" className="hover:text-gray-600 transition-colors">Home</a>
+              <TryLink placement="footer" className="hover:text-gray-600 transition-colors">Try free</TryLink>
               <a href="https://www.writeassess.co.uk/pricing" className="hover:text-gray-600 transition-colors">Pricing</a>
               <a href="https://www.writeassess.co.uk/privacy" className="hover:text-gray-600 transition-colors">Privacy</a>
               <a href="https://www.writeassess.co.uk/contact" className="hover:text-gray-600 transition-colors">Contact</a>
