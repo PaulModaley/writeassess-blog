@@ -1,6 +1,6 @@
 import { defineField, defineType } from 'sanity'
 
-// One document per competitor (_id "competitor.<competitorId>").
+// One document per competitor (_id "competitor-<competitorId>").
 // nameable == false means articles may never name this competitor.
 export default defineType({
   name: 'competitorFacts',
