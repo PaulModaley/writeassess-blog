@@ -22,7 +22,11 @@ export const postBySlugQuery = `
     body,
     tags,
     seo,
-    cluster
+    cluster,
+    strand,
+    lastReviewedAt,
+    comparisonTable,
+    faq
   }
 `
 

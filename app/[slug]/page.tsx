@@ -7,6 +7,9 @@ import { postBySlugQuery, allSlugsQuery } from '@/sanity/queries'
 import PostBody from '@/components/PostBody'
 import TryCta from '@/components/TryCta'
 import { inlineCtaSplitIndex } from '@/lib/tryCta'
+import { buildPostJsonLd } from '@/lib/articleExtras'
+import ComparisonTable from '@/components/ComparisonTable'
+import FaqSection from '@/components/FaqSection'
 
 export const revalidate = 3600
 
@@ -73,27 +76,17 @@ export default async function PostPage({ params }: Props) {
     ? urlFor(post.mainImage).width(1200).height(600).fit('crop').url()
     : null
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.excerpt || '',
-    datePublished: post.publishedAt,
-    url: `https://www.writeassess.co.uk/blog/${slug}`,
-    publisher: {
-      '@type': 'Organization',
-      name: 'WriteAssess',
-      url: 'https://www.writeassess.co.uk',
-    },
-    ...(heroUrl && { image: heroUrl }),
-  }
+  const jsonLd = buildPostJsonLd(post, slug, heroUrl)
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {jsonLd.map((obj, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+        />
+      ))}
 
       <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
         {/* Breadcrumb */}
@@ -110,6 +103,14 @@ export default async function PostPage({ params }: Props) {
           >
             {format(new Date(post.publishedAt), 'd MMMM yyyy')}
           </time>
+          {post.lastReviewedAt && (
+            <p className="text-sm text-gray-400 -mt-2 mb-3">
+              Last checked{' '}
+              <time dateTime={post.lastReviewedAt}>
+                {format(new Date(post.lastReviewedAt), 'd MMMM yyyy')}
+              </time>
+            </p>
+          )}
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-4">
             {post.title}
           </h1>
@@ -134,14 +135,20 @@ export default async function PostPage({ params }: Props) {
         {post.body && splitAt !== null ? (
           <>
             <PostBody body={post.body.slice(0, splitAt)} />
+            <ComparisonTable table={post.comparisonTable} />
             <div className="my-10">
               <TryCta placement="inline" slug={slug} cluster={cluster} />
             </div>
             <PostBody body={post.body.slice(splitAt)} />
           </>
         ) : (
-          post.body && <PostBody body={post.body} />
+          <>
+            {post.body && <PostBody body={post.body} />}
+            <ComparisonTable table={post.comparisonTable} />
+          </>
         )}
+
+        <FaqSection faq={post.faq} />
 
         <div className="mt-14 pt-8 border-t">
           <p className="text-sm text-gray-400 mb-4">
