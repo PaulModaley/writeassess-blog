@@ -134,6 +134,99 @@ export default defineType({
       group: 'editorial',
       description: 'The specific problem a teacher has when they land on this post — distinct from the broader topic cluster.',
     }),
+    // AI-visibility strand fields. All optional; standard posts leave them empty.
+    defineField({
+      name: 'strand',
+      title: 'Strand',
+      type: 'string',
+      group: 'editorial',
+      options: {
+        list: [
+          { title: 'Standard', value: 'standard' },
+          { title: 'AI visibility', value: 'ai-visibility' },
+        ],
+      },
+    }),
+    defineField({
+      name: 'articleType',
+      title: 'Article type',
+      type: 'string',
+      group: 'editorial',
+      options: {
+        list: [
+          { title: 'Approach comparison', value: 'approach-comparison' },
+          { title: 'Tool comparison', value: 'tool-comparison' },
+          { title: 'Decision guide', value: 'decision-guide' },
+          { title: 'Product FAQ', value: 'product-faq' },
+          { title: 'Use case', value: 'use-case' },
+        ],
+      },
+    }),
+    defineField({
+      name: 'questionBankId',
+      title: 'Question bank ID',
+      type: 'string',
+      group: 'editorial',
+      description: 'Row ID in the n8n ai_visibility_questions table this post answers.',
+    }),
+    defineField({
+      name: 'namedCompetitors',
+      title: 'Named competitors',
+      type: 'array',
+      of: [{ type: 'string' }],
+      group: 'editorial',
+      description: 'competitorId values of competitors named in this post.',
+    }),
+    defineField({
+      name: 'lastReviewedAt',
+      title: 'Last checked',
+      type: 'datetime',
+      group: 'editorial',
+      description: 'When the facts in this post were last checked. Shown on the page and used as dateModified.',
+    }),
+    defineField({
+      name: 'comparisonTable',
+      title: 'Comparison table',
+      type: 'object',
+      group: 'editorial',
+      fields: [
+        defineField({ name: 'caption', title: 'Caption', type: 'string' }),
+        defineField({ name: 'columns', title: 'Columns', type: 'array', of: [{ type: 'string' }] }),
+        defineField({
+          name: 'rows',
+          title: 'Rows',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              name: 'tableRow',
+              fields: [defineField({ name: 'cells', title: 'Cells', type: 'array', of: [{ type: 'string' }] })],
+              preview: {
+                select: { cells: 'cells' },
+                prepare: ({ cells }) => ({ title: Array.isArray(cells) ? cells.join(' | ') : '' }),
+              },
+            },
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'faq',
+      title: 'FAQ',
+      type: 'array',
+      group: 'editorial',
+      of: [
+        {
+          type: 'object',
+          name: 'faqItem',
+          fields: [
+            defineField({ name: 'question', title: 'Question', type: 'string' }),
+            defineField({ name: 'answer', title: 'Answer', type: 'text', rows: 3 }),
+          ],
+          preview: { select: { title: 'question', subtitle: 'answer' } },
+        },
+      ],
+    }),
   ],
   groups: [
     {
