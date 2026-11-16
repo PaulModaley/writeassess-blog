@@ -182,8 +182,8 @@ const competitors = [
     nameable: true,
     allowedUrls: [],
     facts: facts([
-      "General AI assistants such as ChatGPT, Gemini, Copilot and Claude aren't built for the DfE writing frameworks.",
-      'With a general AI assistant, the teacher has to provide the framework, the year group and the writing.',
+      'General AI assistants such as ChatGPT, Gemini, Copilot and Claude are general-purpose tools, not products built specifically for primary writing assessment.',
+      'With a general AI assistant, the teacher uploads the writing and says the year group. In the 16 November 2026 test the assistants applied the DfE framework without it being pasted in.',
       "General AI assistants don't keep pupil assessment records.",
       '⚠ Free consumer versions may use conversations for model training unless the user changes settings. Check each provider\'s current policy before citing this.',
     ]),
