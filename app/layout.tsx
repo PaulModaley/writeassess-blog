@@ -3,6 +3,7 @@ import Script from 'next/script'
 import './globals.css'
 import SiteHeader from '@/components/SiteHeader'
 import AnalyticsTracker from '@/components/AnalyticsTracker'
+import ClarityLoader from '@/components/ClarityLoader'
 import { TryLink } from '@/components/TryCta'
 
 export const metadata: Metadata = {
@@ -47,6 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-gray-50 text-gray-900 antialiased font-sans">
         <AnalyticsTracker />
+        <ClarityLoader />
         <SiteHeader />
         <main>{children}</main>
         <footer className="border-t bg-white mt-16 py-8">
